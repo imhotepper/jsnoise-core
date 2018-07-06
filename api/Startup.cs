@@ -70,7 +70,7 @@ namespace WebApplication1
                 if (serviceScope.ServiceProvider.GetService<PodcastsCtx>() != null)
                 {
                     var ctx = serviceScope.ServiceProvider.GetService<PodcastsCtx>();
-                    new DatabaseFacade(ctx).Migrate();
+                    new DatabaseFacade(ctx).Migrate();  
                 }
             }
             
