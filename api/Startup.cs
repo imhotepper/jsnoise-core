@@ -58,6 +58,9 @@ namespace WebApplication1
 
            // app.UseHttpsRedirection();
             app.UseMvc();
+            app.UseStaticFiles();
+            app.UseDefaultFiles();
+            
           
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
