@@ -1,0 +1,6 @@
+.idea/*.*
+.vscode
+.DS_Store
+api/bin
+api/obj
+web/node_modules
