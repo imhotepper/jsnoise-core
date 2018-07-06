@@ -74,7 +74,7 @@ namespace WebApplication1
                 }
             }
             
-            
+        
             
             Mapper.Initialize(cfg =>
             {
