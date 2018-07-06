@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using WebApplication1.Domain;
 using Npgsql;
+using WebApplication1.Dto;
+using WebApplication1.Services;
 
 namespace WebApplication1
 {
@@ -39,6 +42,8 @@ namespace WebApplication1
             services.AddDbContext<PodcastsCtx>(options =>options.UseNpgsql(conStr));
 
            services.AddScoped<PodcastsCtx>();
+            services.AddScoped<FeedUpdaterService>();
+            services.AddScoped<RssReader>();
            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -65,9 +70,21 @@ namespace WebApplication1
                 if (serviceScope.ServiceProvider.GetService<PodcastsCtx>() != null)
                 {
                     var ctx = serviceScope.ServiceProvider.GetService<PodcastsCtx>();
-                    new DatabaseFacade(ctx).EnsureCreated();
+                    new DatabaseFacade(ctx).Migrate();
                 }
             }
+            
+            
+            
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Show, ShowParsedDto>();
+                cfg.CreateMap<ShowParsedDto, Show>();
+                cfg.CreateMap<Producer, ProducersController.ProducerDto>();
+                cfg.CreateMap<Show, ShowDto>();
+            });
+
+
         }
     }
 }

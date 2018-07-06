@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Domain;
 using  System.Linq;
 using AutoMapper;
+using WebApplication1.Services;
 
 namespace WebApplication1.Controllers
 {
@@ -12,18 +13,19 @@ namespace WebApplication1.Controllers
     public partial class ProducersController:ControllerBase
     {
         private PodcastsCtx _db;
+        private FeedUpdaterService _feedUpdater;
 
-        public ProducersController(PodcastsCtx db)  
+        public ProducersController(PodcastsCtx db, FeedUpdaterService feedUpdater)
         {
             _db = db;
+            _feedUpdater = feedUpdater;
         }
 
         [HttpGet]
         public ActionResult<List<Dto.ProducersController.ProducerDto>> Get()
         {
             var producers = _db.Producers.ToList();
-            Mapper.Initialize(cfg => cfg.CreateMap<Producer, Dto.ProducersController.ProducerDto>());
-
+    
             return Ok(Mapper.Map<List<Producer>, List<Dto.ProducersController.ProducerDto>>(producers));
         }
 
@@ -38,6 +40,14 @@ namespace WebApplication1.Controllers
             
             return CreatedAtAction(nameof(Get), new { id = producer.Id }, producer);
 
+        }
+
+        [HttpGet]
+        [Route("update")]
+        public ActionResult Update()
+        {
+            _feedUpdater.Update();
+            return Ok();
         }
     }
 }

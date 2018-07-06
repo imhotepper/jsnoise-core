@@ -1,15 +1,11 @@
 using System;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WebApplication1.Domain
+namespace WebApplication1.Dto
 {
-    public class Show
+    public class ShowDto
     {
         public int Id { get; set; }
-        public int ProducerId { get; set; }
-        public virtual Producer Producer { get; set; }
         public string Title { get; set; }
-        [Column(TypeName = "text")]
         public string Description { get; set; }
         public string Mp3 { get; set; }
         public DateTime PublishedDate { get; set; }
