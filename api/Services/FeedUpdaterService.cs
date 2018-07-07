@@ -39,6 +39,9 @@ namespace WebApplication1.Services
                         if (!_db.Shows.Any(x => x.Title == s.Title)) _db.Shows.Add(s);
                     });
                 _db.SaveChanges();
+                Console.WriteLine("---------------------------");
+                Console.WriteLine(producer.Name);
+                Console.WriteLine("---------------------------");
             }
             catch (Exception e)
             {
