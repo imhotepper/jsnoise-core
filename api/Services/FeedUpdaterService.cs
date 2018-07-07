@@ -1,8 +1,10 @@
+using System;
 using System.Linq;
 using AutoMapper;
 using WebApplication1.Domain;
 using WebApplication1.Dto;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 
 namespace WebApplication1.Services
@@ -27,15 +29,23 @@ namespace WebApplication1.Services
 
         private void UpdateShows(Producer producer)
         {
-            
-            var items = _rssReader.Parse(producer.FeedUrl);
-            Mapper.Map<List<ShowParsedDto>,List< Show>>(items)
-            .ForEach(s =>
-                {
-                    s.ProducerId = producer.Id;
-                    if (!_db.Shows.Any(x => x.Title == s.Title)) _db.Shows.Add(s);
-                });
-            _db.SaveChanges();
+            try
+            {
+                var items = _rssReader.Parse(producer.FeedUrl);
+                Mapper.Map<List<ShowParsedDto>,List< Show>>(items)
+                    .ForEach(s =>
+                    {
+                        s.ProducerId = producer.Id;
+                        if (!_db.Shows.Any(x => x.Title == s.Title)) _db.Shows.Add(s);
+                    });
+                _db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine($"Error while updating feed: {producer.Name}: \n\r" + e.Message);
+                Console.WriteLine(e);                
+            }
+           
         }
     }
 }
