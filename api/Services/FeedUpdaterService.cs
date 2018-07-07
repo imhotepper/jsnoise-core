@@ -45,7 +45,7 @@ namespace WebApplication1.Services
             }
             catch (Exception e)
             {
-                Trace.WriteLine($"Error while updating feed: {producer.Name}: \n\r" + e.Message);
+                Console.WriteLine($"Error while updating feed: {producer.Name}: \n\r" + e.Message);
                 Console.WriteLine(e);                
             }
            
