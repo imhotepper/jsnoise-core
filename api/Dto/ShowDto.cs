@@ -9,5 +9,7 @@ namespace CoreJsNoise.Dto
         public string Description { get; set; }
         public string Mp3 { get; set; }
         public DateTime PublishedDate { get; set; }
+        public string ProducerName { get; set; }
+        public int ProducerId { get; set; }
     }
 }

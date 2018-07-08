@@ -11,7 +11,7 @@ namespace CoreJsNoise.Controllers
 {
     [ApiController]
     [Route("api/[Controller]")]
-    public class ShowsController: ControllerBase
+    public class ShowsController : ControllerBase
     {
         private PodcastsCtx _db;
 
@@ -25,35 +25,44 @@ namespace CoreJsNoise.Controllers
 
         [HttpGet]
         [Route("/api/showslist")]
-        public ActionResult<ShowsResponse> GetAll(string q, int? page=1)
+        public ActionResult<ShowsResponse> GetAll(string q, int? page = 1)
         {
             var pageSize = 20;
-            q = q?.ToLowerInvariant();  
-            IQueryable<Show> shows = _db.Shows;
+            q = q?.ToLowerInvariant();
+            IQueryable<Show> shows = _db.Shows.Include(x=>x.Producer);
             if (!string.IsNullOrWhiteSpace(q))
-                shows = shows.Where(x => x.Title.ToLowerInvariant().Contains(q) || x.Description.ToLowerInvariant().Contains(q));
+                shows = shows.Where(x =>
+                    x.Title.ToLowerInvariant().Contains(q) || x.Description.ToLowerInvariant().Contains(q));
             var counts = shows.Count();
             var resp = shows
-                .Skip(pageSize * ((page??1)-1))
+                .Skip(pageSize * ((page ?? 1) - 1))
                 .Take(pageSize)
-                .Select(x => new ShowDto(){Id = x.Id, Title = x.Title, Mp3 = x.Mp3, PublishedDate = x.PublishedDate}).ToList();
+                .Select(x => new ShowDto()
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Mp3 = x.Mp3,
+                    PublishedDate = x.PublishedDate,
+                    ProducerId = x.ProducerId,
+                    ProducerName = x.Producer.Name
+                })
+                .ToList();
 
             return new ShowsResponse
             {
-                Shows =   resp,
-                First = page ==1,
-                Last = Math.Ceiling((double)counts/pageSize) == page
+                Shows = resp,
+                First = page == 1,
+                Last = Math.Ceiling((double) counts / pageSize) == page
             };
-
         }
 
         [HttpGet]
         [Route("/api/shows/{id}")]
         public ActionResult Get(int id)
         {
-            var show= _db.Shows.Include(x=>x.Producer).FirstOrDefault(x => x.Id == id);
+            var show = _db.Shows.Include(x => x.Producer).FirstOrDefault(x => x.Id == id);
             if (show == null) return NotFound();
-            
+
             /*
             podcast.title">?s</h1>   
     
@@ -71,14 +80,13 @@ namespace CoreJsNoise.Controllers
              */
 
 
-            return Ok( new
+            return Ok(new
             {
                 Title = show.Title,
                 ProducerId = show.ProducerId,
                 ProducerName = show.Producer.Name,
                 PublishedDate = show.PublishedDate,
                 Mp3 = show.Mp3
-
             });
         }
     }
