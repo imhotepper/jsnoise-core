@@ -61,7 +61,7 @@ namespace CoreJsNoise.Controllers
                 shows = shows.Where(x =>
                     x.Title.ToLowerInvariant().Contains(q) || x.Description.ToLowerInvariant().Contains(q));
             var counts = shows.Count();
-            var resp = shows
+            var resp = shows.OrderByDescending(x=>x.PublishedDate)
                 .Skip(pageSize * ((page ?? 1) - 1))
                 .Take(pageSize)
                 .Select(x => new ShowDto()
