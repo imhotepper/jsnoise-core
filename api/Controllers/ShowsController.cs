@@ -32,7 +32,7 @@ namespace CoreJsNoise.Controllers
             IQueryable<Show> shows = _db.Shows.Include(x=>x.Producer);
             if (!string.IsNullOrWhiteSpace(q))
                 shows = shows.Where(x =>
-                    x.Title.ToLowerInvariant().Contains(q) || x.Description.ToLowerInvariant().Contains(q));
+                    x.Title.ToLower().Contains(q) || x.Description.ToLower().Contains(q));
             var counts = shows.Count();
             var resp = shows.OrderByDescending(x=>x.PublishedDate)
                 .Skip(pageSize * ((page ?? 1) - 1))
