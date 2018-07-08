@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using CoreJsNoise.Domain;
+using CoreJsNoise.Dto;
+using CoreJsNoise.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -13,12 +16,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using WebApplication1.Domain;
 using Npgsql;
-using WebApplication1.Dto;
-using WebApplication1.Services;
 
-namespace WebApplication1
+namespace CoreJsNoise
 {
     public class Startup
     {
@@ -44,7 +44,8 @@ namespace WebApplication1
            services.AddScoped<PodcastsCtx>();
             services.AddScoped<FeedUpdaterService>();
             services.AddScoped<RssReader>();
-           
+
+            services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -63,8 +64,8 @@ namespace WebApplication1
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseMvc();
-            
-          
+
+            app.UseCors(cfg => cfg.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 if (serviceScope.ServiceProvider.GetService<PodcastsCtx>() != null)

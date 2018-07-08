@@ -13,6 +13,7 @@
     </div>
 
     <PodcastListItem v-for="p in podcasts" :key="p.id" :p="p" ></PodcastListItem>
+   
 
     <div class="m8 tc v-mid top-40" v-show="podcasts.length == 0 ">
       <h2>Nothing found yet!</h2>
@@ -37,7 +38,7 @@ export default {
   props: ["producer_id"],
   components: { PodcastListItem },
   computed: {
-    ...mapGetters(['podcasts','totalPages','first','last']),
+     ...mapGetters(['podcasts','totalPages','first','last']),
     pid: function() {
       return (this.producer_id || "").split("-")[0];
     }

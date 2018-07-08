@@ -11,20 +11,20 @@
         </fieldset>
       </form>
     </div>
-
+        
     <PodcastListItem v-for="p in podcasts" :key="p.id" :p="p" ></PodcastListItem>
 
     <div class="m8 tc v-mid top-40" v-show="podcasts.length == 0 ">
       <h2>Nothing found yet!</h2>
     </div>
 
-    <div class="mw8 center"  v-show="totalPages > 1">
+    <div class="mw8 center">
       <nav class="cf pa3 pa4-ns" data-name="pagination-next-prev">
         <a class="fl dib link dim black f6 f5-ns b pa2" v-show="!first" @click="prev" title="Previous">&larr; Previous</a>
         <a class="fr dib link dim black f6 f5-ns b pa2" v-show="!last" @click="next" title="Next">Next &rarr;</a>
       </nav>
     </div>
-
+     
     </div>
 </template>
 <script>

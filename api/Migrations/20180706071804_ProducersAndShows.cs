@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace WebApplication1.Migrations
+namespace CoreJsNoise.Migrations
 {
     public partial class ProducersAndShows : Migration
     {

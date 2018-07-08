@@ -55,7 +55,7 @@ export default new Vuex.Store({
                 .get(url)
                 .then(resp => {
                     context.commit("setPodcasts", {
-                        podcasts: resp.data.content,
+                        podcasts: resp.data.shows,
                         last: resp.data.last,
                         first: resp.data.first,
                         totalPages: resp.data.totalPages

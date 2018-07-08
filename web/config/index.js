@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api':{
-        target:'http://localhost:8080/api',
+        target:'http://localhost:5000/api',
         changeOrigin: true,
         pathRewrite:{
           '^/api':''
@@ -22,7 +22,7 @@ module.exports = {
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
-    port: 8081, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,
@@ -46,10 +46,10 @@ module.exports = {
 
   build: {
     // Template for index.html
-    index: path.resolve(__dirname, '../../jsnoise-api/src/main/resources/public/index.html'),
+    index: path.resolve(__dirname, '../../api/wwwroot/index.html'),
 
     // Paths
-    assetsRoot: path.resolve(__dirname, '../../jsnoise-api/src/main/resources/public'),
+    assetsRoot: path.resolve(__dirname, '../../api/wwwroot'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
 

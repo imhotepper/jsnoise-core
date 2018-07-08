@@ -1,13 +1,13 @@
 using System;
 using System.Linq;
 using AutoMapper;
-using WebApplication1.Domain;
-using WebApplication1.Dto;
 using System.Collections.Generic;
 using System.Diagnostics;
+using CoreJsNoise.Domain;
+using CoreJsNoise.Dto;
 using Microsoft.EntityFrameworkCore;
 
-namespace WebApplication1.Services
+namespace CoreJsNoise.Services
 {
     public class FeedUpdaterService
     {        
@@ -29,6 +29,7 @@ namespace WebApplication1.Services
 
         private void UpdateShows(Producer producer)
         {
+            //TODO: make just one call to check what exists
             try
             {
                 var items = _rssReader.Parse(producer.FeedUrl);

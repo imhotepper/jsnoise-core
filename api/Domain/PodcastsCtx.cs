@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace WebApplication1.Domain
+namespace CoreJsNoise.Domain
 {
     public class PodcastsCtx: DbContext
     {

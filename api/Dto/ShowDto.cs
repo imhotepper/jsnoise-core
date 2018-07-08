@@ -1,6 +1,6 @@
 using System;
 
-namespace WebApplication1.Dto
+namespace CoreJsNoise.Dto
 {
     public class ShowDto
     {

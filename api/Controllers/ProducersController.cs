@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using WebApplication1.Domain;
 using  System.Linq;
 using AutoMapper;
-using WebApplication1.Services;
+using CoreJsNoise.Domain;
+using CoreJsNoise.Dto;
+using CoreJsNoise.Services;
 
-namespace WebApplication1.Controllers
+namespace CoreJsNoise.Controllers
 {
     [ApiController]
     [Route("api/[Controller]")]
@@ -48,6 +49,28 @@ namespace WebApplication1.Controllers
         {
             _feedUpdater.Update();
             return Ok();
+        }
+        
+        [HttpGet]
+        [Route("/api/producers/{id}/shows")]
+        public ActionResult<ShowsResponse> GetAll(int id, string q, int? page=1)
+        {
+            var pageSize = 20;
+            q = q?.ToLowerInvariant();  
+            IQueryable<Show> shows = _db.Shows.Where(x=>x.ProducerId == id);
+            if (!string.IsNullOrWhiteSpace(q))
+                shows = shows.Where(x => x.Title.ToLowerInvariant().Contains(q) || x.Description.ToLowerInvariant().Contains(q));
+            var counts = shows.Count();
+            var resp = shows
+                .Skip(pageSize * ((page??1)-1))
+                .Take(pageSize)
+                .Select(x => new ShowDto(){Id = x.Id, Title = x.Title, Mp3 = x.Mp3, PublishedDate = x.PublishedDate}).ToList();
+            
+            return new ShowsResponse{
+                Shows =   resp,
+                First = page ==1,
+                Last = Math.Ceiling((double)counts/pageSize) == page
+            };
         }
     }
 }

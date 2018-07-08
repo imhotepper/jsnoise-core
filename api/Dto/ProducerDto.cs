@@ -1,4 +1,4 @@
-namespace WebApplication1.Dto
+namespace CoreJsNoise.Dto
 {
     public partial class ProducersController
     {

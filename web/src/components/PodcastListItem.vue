@@ -17,7 +17,7 @@
         By <span class="ttu">     
             <router-link :to="{name:'producerShows',params: {producer_id : slugp(p)}}">{{p.producerName}}</router-link>
            </span>
-            <span class="f6  gray"> on {{p.pubDate | date }}</span>
+            <span class="f6  gray"> on {{p.publishedDate | date }}</span>
     </p>
   </article>  
 </template>

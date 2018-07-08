@@ -4,9 +4,9 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using CodeHollow.FeedReader;
 using CodeHollow.FeedReader.Feeds;
-using WebApplication1.Dto;
+using CoreJsNoise.Dto;
 
-namespace WebApplication1.Services
+namespace CoreJsNoise.Services
 {
     public class RssReader
     {

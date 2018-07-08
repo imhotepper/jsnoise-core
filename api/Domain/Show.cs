@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WebApplication1.Domain
+namespace CoreJsNoise.Domain
 {
     public class Show
     {

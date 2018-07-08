@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Security.Policy;
 using System.Xml;
+using CoreJsNoise.Services;
 using Microsoft.AspNetCore.Mvc;
-using WebApplication1.Services;
 
-namespace WebApplication1.Controllers
+namespace CoreJsNoise.Controllers
 {
     [ApiController]
     [Route("api/[Controller]")]
