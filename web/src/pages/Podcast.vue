@@ -2,7 +2,7 @@
 <div>
 
     <div class="m8 tc v-mid top-40" v-show="isLoading">
-        <h2>Loading, please wait! </h2>
+        <h2>Loading podcast ..., please wait! </h2>
     </div>
     
     <article class="pv4 bt bb b--black-10 ph3 ph0-l" v-show="!isLoading">
