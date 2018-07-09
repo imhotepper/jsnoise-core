@@ -14,9 +14,9 @@
 
     <PodcastListItem v-show="!isLoading" v-for="p in podcasts" :key="p.id" :p="p" ></PodcastListItem>
 
-        <div class="m8 tc v-mid top-40" v-show="isLoading">
-            <h2>Loading, please wait! </h2>
-        </div>
+    <div class="m8 tc v-mid top-40" v-show="isLoading">
+        <h2>Loading, please wait! </h2>
+    </div>
 
 
         <div class="m8 tc v-mid top-40" v-show="podcasts.length == 0 && !isLoading">
