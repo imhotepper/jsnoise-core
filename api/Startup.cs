@@ -122,9 +122,25 @@ namespace CoreJsNoise
 //                
 //
 //            });
-            app.UseMiddleware<AutoMapperMiddleware>();
+            
+            
+            app.Use(async (context, next) => 
+            { 
+                await next(); 
+                var path = context.Request.Path.Value;
+
+                if (!path.StartsWith("/api") && !Path.HasExtension(path)) 
+                { 
+                    context.Request.Path = "/index.html"; 
+                    await next(); 
+                } 
+            });            
 
             
+            
+            app.UseMiddleware<AutoMapperMiddleware>();
+
+           // app.UseResponseCompression();
         
             //basic auth
             app.UseAuthentication();
