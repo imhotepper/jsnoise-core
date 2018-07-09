@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -12,17 +13,24 @@ namespace CoreJsNoise.Services
     {
         public List<ShowParsedDto> Parse(string rssFeed)
         {
+            Console.WriteLine("Updating : "+ rssFeed);
+                
             var itemList = FeedReader.ReadAsync(rssFeed).Result.Items;
             var resp = new List<ShowParsedDto>();
             foreach (var item in itemList)
             {
                 if (item.SpecificItem is MediaRssFeedItem &&
-                    (bool) (item.SpecificItem as MediaRssFeedItem).Enclosure.Url?.Contains(".mp3"))
+                    (bool) (item.SpecificItem as MediaRssFeedItem)?.Enclosure?.Url?.Contains(".mp3") ||
+                    item.SpecificItem is Rss20FeedItem &&
+                    (bool) (item.SpecificItem as Rss20FeedItem)?.Enclosure?.Url?.Contains(".mp3"))
                 {
-                    var url = (item.SpecificItem as MediaRssFeedItem).Enclosure.Url;
+                    var url = (item.SpecificItem as MediaRssFeedItem)?.Enclosure?.Url;
+                    if (string.IsNullOrWhiteSpace(url))
+                        url = (item.SpecificItem as Rss20FeedItem)?.Enclosure?.Url;
+                    
                     var mp3 = url.Substring(0, 3 + url.IndexOf("mp3"));
-                    Trace.WriteLine(
-                        $"{item.Id}:{item.Title} ({item.PublishingDate}) - {mp3} {item.Description} ||| {item.Author}");
+//                    Trace.WriteLine(
+//                        $"{item.Id}:{item.Title} ({item.PublishingDate}) - {mp3} {item.Description} ||| {item.Author}");
                     resp.Add(new ShowParsedDto
                     {
                         ShowId = item.Id,

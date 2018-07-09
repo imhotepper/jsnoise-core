@@ -11,5 +11,6 @@
     <PackageReference Include="HerokuPGParser" Version="1.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.1.1" />
+    <PackageReference Include="ZNetCS.AspNetCore.Authentication.Basic" Version="3.0.0" />
   </ItemGroup>
 </Project>

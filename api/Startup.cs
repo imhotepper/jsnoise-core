@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -22,6 +23,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Npgsql;
+using ZNetCS.AspNetCore.Authentication.Basic;
+using ZNetCS.AspNetCore.Authentication.Basic.Events;
 
 namespace CoreJsNoise
 {
@@ -53,6 +56,44 @@ namespace CoreJsNoise
 
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            
+           
+               services .AddAuthentication(BasicAuthenticationDefaults.AuthenticationScheme)
+                .AddBasicAuthentication(
+                    options =>
+                    {
+                        var userName  =Environment.GetEnvironmentVariable("USER_NAME");
+                        if (string.IsNullOrWhiteSpace(userName)) userName = "user";
+                        var pass  =Environment.GetEnvironmentVariable("PASSWORD");
+                        if (string.IsNullOrWhiteSpace(pass)) pass = "pass";
+                        
+                        options.Realm = "My Application";
+                        options.Events = new BasicAuthenticationEvents
+                        {
+                            OnValidatePrincipal = context =>
+                            {
+                                if ((context.UserName == userName) && (context.Password == pass))
+                                {
+                                    var claims = new List<Claim>
+                                    {
+                                        new Claim(ClaimTypes.Name, context.UserName, context.Options.ClaimsIssuer)
+                                    };
+
+                                    var principal = new ClaimsPrincipal(new ClaimsIdentity(claims, BasicAuthenticationDefaults.AuthenticationScheme));
+                                    context.Principal = principal;
+                                }
+                                else 
+                                {
+                                    // optional with following default.
+                                    // context.AuthenticationFailMessage = "Authentication failed."; 
+                                }
+
+                                return Task.CompletedTask;
+                            }
+                        };
+                    });
+            
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,8 +108,25 @@ namespace CoreJsNoise
                 app.UseHsts();
             }
 
-            app.UseStatusCodePagesWithRedirects("/");
+          //  app.UseStatusCodePagesWithRedirects("/");
+            app.UseStatusCodePages( async context =>
+            {
+                if (context.HttpContext.Response.StatusCode == 404)
+                {
+                     context.HttpContext.Response.Redirect("/");
+//                        `.WriteAsync(
+//                        "Status code page, status code: " + 
+//                        context.HttpContext.Response.StatusCode);
+                }
+                
+
+            });
             app.UseMiddleware<AutoMapperMiddleware>();
+
+            
+        
+            //basic auth
+            app.UseAuthentication();
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
@@ -85,6 +143,15 @@ namespace CoreJsNoise
             }
         }
     }
+    
+    public static class RequestAutoMapperMiddleware
+    {
+        public static IApplicationBuilder UseRequestCulture(
+            this IApplicationBuilder builder)
+        {
+            return builder.UseMiddleware<AutoMapperMiddleware>();
+        }
+    }
 
     public class AutoMapperMiddleware
     {
@@ -99,21 +166,25 @@ namespace CoreJsNoise
         {
             try
             {
-                AutoMapper.Mapper.Configuration.AssertConfigurationIsValid();
-            
+              
                 Mapper.Initialize(cfg =>
                 {
                     cfg.CreateMap<Show, ShowParsedDto>();
                     cfg.CreateMap<ShowParsedDto, Show>();
+                    cfg.CreateMap<List<ShowParsedDto>, List<Show>>();
                     cfg.CreateMap<Producer, ProducersController.ProducerDto>();
                     cfg.CreateMap<Show, ShowDto>();
+                    
+                    
                 });
+              //  AutoMapper.Mapper.Configuration.AssertConfigurationIsValid();
 
 
             }
             catch (InvalidOperationException ex)
             {
                 //DoNothing since is initialized already
+                Console.WriteLine("Automapper error: "+ ex.Message);
             }
 
            

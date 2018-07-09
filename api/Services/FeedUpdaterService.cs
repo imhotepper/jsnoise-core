@@ -27,14 +27,20 @@ namespace CoreJsNoise.Services
                 .ForEach(p => UpdateShows(p));
         }
 
-        private void UpdateShows(Producer producer)
+        public void UpdateShows(Producer producer)
         {
             //TODO: make just one call to check what exists
             try
             {
                 var items = _rssReader.Parse(producer.FeedUrl);
-                Mapper.Map<List<ShowParsedDto>,List< Show>>(items)
-                    .ForEach(s =>
+                var itemsToSave = items.Select(x => new Show
+                {
+                    Title = x.Title,
+                    Description = x.Description,
+                    Mp3 = x.Mp3,
+                    PublishedDate = x.PublishedDate ?? DateTime.Now
+                }).ToList();
+                 itemsToSave.ForEach(s =>
                     {
                         s.ProducerId = producer.Id;
                         if (!_db.Shows.Any(x => x.Title == s.Title)) _db.Shows.Add(s);

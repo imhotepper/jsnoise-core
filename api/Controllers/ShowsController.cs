@@ -27,6 +27,7 @@ namespace CoreJsNoise.Controllers
         [Route("/api/showslist")]
         public ActionResult<ShowsResponse> GetAll(string q, int? page = 1)
         {
+           // throw new ApplicationException("Am crapatttt");
             var pageSize = 20;
             q = q?.ToLowerInvariant();
             IQueryable<Show> shows = _db.Shows.Include(x=>x.Producer);
