@@ -109,18 +109,19 @@ namespace CoreJsNoise
             }
 
           //  app.UseStatusCodePagesWithRedirects("/");
-            app.UseStatusCodePages( async context =>
-            {
-                if (context.HttpContext.Response.StatusCode == 404)
-                {
-                     context.HttpContext.Response.Redirect("/");
-//                        `.WriteAsync(
-//                        "Status code page, status code: " + 
-//                        context.HttpContext.Response.StatusCode);
-                }
-                
-
-            });
+//            app.UseStatusCodePages( async context =>
+//            {
+//                if (context.HttpContext.Response.StatusCode == 404)
+//                {
+//                    var pathPars = context.HttpContext.Request.Path.ToUriComponent().ToString();
+//                     context.HttpContext.Response.Redirect($"/{pathPars}");
+////                        `.WriteAsync(
+////                        "Status code page, status code: " + 
+////                        context.HttpContext.Response.StatusCode);
+//                }
+//                
+//
+//            });
             app.UseMiddleware<AutoMapperMiddleware>();
 
             

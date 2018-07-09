@@ -6,6 +6,7 @@
       <router-link class="banner" :to="{path:'/', params:{},query:{}}">JsNoise </router-link>
       </h1>
     <router-view/>
+      <router-link class="white" :to="{path:'/login'}">login</router-link>
     
   </section>
 
@@ -52,6 +53,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   margin-top: 60px;
 }
+
+white{color:white}
 
 .banner{
   color: #42b983;
