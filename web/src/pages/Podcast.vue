@@ -1,11 +1,15 @@
 <template>
 <div>
 
-    <div class="m8 tc v-mid top-40" v-show="isLoading">
-        <h2>Loading podcast ..., please wait! </h2>
-    </div>
+    <article class="pv4 bt bb b--black-10 ph3 ph0-l" v-show="isLoading">
+        <div class="flex flex-column flex-row-ns">
+            <div class="w-100 w-60-ns pr3-ns order-1 order-1-ns">
+                <h1 class="f3 athelas mt0 lh-title" >Loading podcast ... </h1>
+            </div>
+        </div>
+    </article>
     
-    <article class="pv4 bt bb b--black-10 ph3 ph0-l" v-show="!isLoading">
+        <article class="pv4 bt bb b--black-10 ph3 ph0-l" v-show="!isLoading">
         <div class="flex flex-column flex-row-ns">
             <div class="w-100 w-60-ns pr3-ns order-1 order-1-ns">
                 <h1 class="f3 athelas mt0 lh-title" >{{podcast.title}}</h1>
