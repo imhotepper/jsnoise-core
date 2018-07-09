@@ -13,7 +13,8 @@ export default new Vuex.Store({
         last: true,
         q: '',
         producers: [],
-        isLoggedIn: !!localStorage.getItem("auth")
+        isLoggedIn: !!localStorage.getItem("auth"),
+        isLoading:false
     },
     getters: {
         podcasts: (state) => state.podcasts,
@@ -22,7 +23,8 @@ export default new Vuex.Store({
         totalPages: (state) => state.totalPages,
         q: (state) => state.q,
         podcast: (state) => state.podcast,
-        producers:(state) => state.producers
+        producers:(state) => state.producers,
+        isLoading:(state) => state.isLoading
     },
     mutations: {
         setPodcasts(state, details) {
@@ -32,15 +34,20 @@ export default new Vuex.Store({
             state.totalPages = details.totalPages;
         },
         setPodcast: (state, podcast) => state.podcast = podcast,
-        setProducers: (state, producers) => state.producers = producers
+        setProducers: (state, producers) => state.producers = producers,
+        isLoading:(state,isLoading) => state.isLoading = isLoading
     },
     actions: {
         loadPodcast(context, id) {
+            context.commit('isLoading', true);
+            console.log('isLoading:', true);
             Vue.axios
                 .get(`/api/shows/${id}`)
-                .then(resp =>
-                    context.commit('setPodcast', resp.data))
-                .catch(err => console.log(err));
+                .then(resp =>{
+                    context.commit('isLoading', false);
+                    context.commit('setPodcast', resp.data);})
+                .catch(err => {
+                    context.commit('isLoading', false);console.log(err);});
 
         },
         loadPodcasts(context, details) {
@@ -50,7 +57,7 @@ export default new Vuex.Store({
             }
 
             if (details.q) url += "&q=" + details.q;
-
+            context.commit('isLoading', true);
             Vue.axios
                 .get(url)
                 .then(resp => {
@@ -60,8 +67,11 @@ export default new Vuex.Store({
                         first: resp.data.first,
                         totalPages: resp.data.totalPages
                     });
+                    context.commit('isLoading', false);
                 })
-                .catch(err => console.log(err));
+                .catch(err =>{
+                    context.commit('isLoading', false);
+                     console.log(err);});
         },
         loadProducers(context) {
             Vue.axios.get('/api/admin/producers')

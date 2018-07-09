@@ -74,11 +74,12 @@ namespace CoreJsNoise.Controllers
                     ProducerName = x.Producer.Name
                 }).ToList();
 
+            var totalPages = Math.Ceiling((double) counts / pageSize);
             return new ShowsResponse
             {
                 Shows = resp,
-                First = page == 1,
-                Last = Math.Ceiling((double) counts / pageSize) == page
+                First = page == 1, 
+                Last = totalPages == 0 ||  totalPages == page   
             };
         }
     }
