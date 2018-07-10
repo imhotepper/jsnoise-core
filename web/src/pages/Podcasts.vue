@@ -2,18 +2,8 @@
 
 
     <div>
-        <div class="pa4-l">
-            <form  @submit.prevent="submit" class="bg-light-red mw7 center pa4 br2-ns ba b--black-10" >
-                <fieldset class="cf bn ma0 pa0">
-                    <div class="cf">
-                        <input class="f6 f5-l input-reset bn fl black-80 bg-white pa3 lh-solid w-100 w-75-m w-80-l br2-ns br--left-ns"
-                               placeholder="What are you looking for today ?"  type="text" v-model="search">
-                    </div>
-                </fieldset>
-            </form>
-        </div>
-    
-    <div class="container">
+       
+        <div class="container">
         <div id="flow">
             <span class="flow-1"></span>
             <span class="flow-2"></span>
@@ -27,7 +17,7 @@
                     <div class="control is-expanded">
                         <input class="input has-text-centered"
                               v-model="search"
-                               type="search" placeholder="» » » » » » find podcasts ?? « « « « « «">
+                               type="search" placeholder="» » » » » » what are you looking for ? « « « « « «">
                     </div>
                     <div class="control">
                         <a class="button is-info">Search</a>

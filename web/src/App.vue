@@ -1,21 +1,14 @@
 <template>
 <!-- Begin page content -->
   <div>
-    <section class="mw7 center" id="app2" style="display: none;">
-      <h1 class="athelas ph3 ph0-l ">
-        <router-link class="banner" :to="{path:'/', params:{},query:{}}">JsNoise </router-link>
-      </h1>
-      <router-view/>
-    </section>
+   
 
-
-    <div id="app">
+    <div >
       <!-- START NAV -->
       <nav class="navbar">
         <div class="container">
           <div class="navbar-brand">
-            <router-link class="banner" :to="{path:'/', params:{},query:{}}">JsNoise </router-link>
-            
+            <router-link class="banner" :to="{path:'/', params:{},query:{}}">Js Noise </router-link>
           </div>
        
         </div>
