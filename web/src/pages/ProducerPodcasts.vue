@@ -14,7 +14,7 @@
             <div class="section">
                 <form  @submit.prevent="submit"  >
 
-                    <div class="box">
+                    <div class="box mb-5">
                         <div class="field has-addons">
                             <div class="control is-expanded">
                                 <input class="input has-text-centered"

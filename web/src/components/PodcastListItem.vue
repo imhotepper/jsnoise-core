@@ -4,8 +4,8 @@
 
     <div>      
         
-        <div class="card m-5" v-show="!isLoading">
-            <div class="columns is-centered p-2 is-gapless">
+        <div class="card mb-5" v-show="!isLoading">
+            <div class="columns is-centered is-gapless">
                 <div class="column is-narrow">
                     <div class="container ">
                         <div class="is-centered">
