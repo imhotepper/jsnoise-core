@@ -16,7 +16,6 @@
       <!-- END NAV -->
       
       <router-view/>
-
     
       <footer class="footer">
         <div class="container">
