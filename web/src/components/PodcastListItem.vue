@@ -2,31 +2,40 @@
 
 <template>
 
-
-    <div class="column " v-show="!isLoading" >
-        <div class="card ">
-            <div class="card-content">
-                <div class="media">
-                    <div class="media-left">
-                        <figure class="image is-96x96" @click="playMp3" >
-                            <img  style="" :src="isPlaying && mp3 == p.mp3 ? '/static/img/play.png': isMp3Loading && mp3 == p.mp3  ? '/static/img/play-wip.gif':'/static/img/play-pause.png'" alt="Image">
-                        </figure>
+    <div>      
+        
+        <div class="card m-5" v-show="!isLoading">
+            <div class="columns is-centered p-2 is-gapless">
+                <div class="column is-narrow">
+                    <div class="container ">
+                        <div class="is-centered">
+                            <figure class="image is-64x64" @click="playMp3" >
+                                <img  style="" :src="isPlaying && mp3 == p.mp3 ? '/static/img/play.png': isMp3Loading && mp3 == p.mp3  ? '/static/img/play-wip.gif':'/static/img/play-pause.png'" alt="Image">
+                            </figure>    
+                        </div>
+                            
                     </div>
                     
-                    <div class="media-content">
-                        <p class="title is-4 no-padding p20" >
-                            <a @click="playMp3">{{p.title}}</a>
-                        </p>
-                        <p class="p10"><span class="title is-6 ">
-                            by  <router-link :to="{name:'producerShows',params: {producer_id : slugp(p)}}">{{p.producerName}}</router-link>
-                            </span>
-                            on {{p.publishedDate | date }}</p>
-                    </div>
                 </div>
-               
+                <div class="column m-2">
+                      <b>  <a class="title is-4" @click="playMp3">{{p.title}}</a> </b>
+                    <p class="control ">
+                           <span class="">
+                            by  <router-link class="button is-text"  :to="{name:'producerShows',params: {producer_id : slugp(p)}}">{{p.producerName}}</router-link>
+                            </span>
+                        on {{p.publishedDate | date }}
+                    </p>
+                </div>
             </div>
         </div>
+        
     </div>
+
+   
+    
+    
+    
+    
     
     <!--
         <article class="pv4 bt bb b--black-10 ph3 ph0-l" v-show="!isLoading"  style="display: none;" >
