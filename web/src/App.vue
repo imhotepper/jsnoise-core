@@ -84,20 +84,32 @@ export default {
 }
 
 
-/*.banner{*/
-  /*color: #42b983;*/
-/*}*/
-/*a.banner:hover {*/
-  /*color: #36976c;*/
-  /*text-decoration: none;*/
-/*}*/
+.banner{
+  color: #007bff;
+}
+a.banner:hover {
+  color: #007baf;
+  text-decoration: none;
+}
+.p10{
+    padding-top:10px;
+}
+
+.mt10{
+    margin-top: 10px !important;
+}
+.image img{
+    padding-top:10px !important;
+    width: 80%;
+}
 
 /*h2 {*/
   /*margin-top: 10px;*/
   /*margin-bottom: 20px;*/
   /*color: black;*/
 /*}*/
+
 a {
-  text-decoration: none !important;
+  /*text-decoration: none !important;*/
 }
 </style>

@@ -12,12 +12,12 @@
                             <img  style="" :src="isPlaying && mp3 == p.mp3 ? '/static/img/play.png': isMp3Loading && mp3 == p.mp3  ? '/static/img/play-wip.gif':'/static/img/play-pause.png'" alt="Image">
                         </figure>
                     </div>
+                    
                     <div class="media-content">
-                        <p class="title is-4 no-padding" >
+                        <p class="title is-4 no-padding p20" >
                             <a @click="playMp3">{{p.title}}</a>
-                            <!--<router-link  class="no-underline" :to="`/shows/${slug(p)}`">{{p.title}}</router-link>-->
                         </p>
-                        <p><span class="title is-6">
+                        <p class="p10"><span class="title is-6 ">
                             by  <router-link :to="{name:'producerShows',params: {producer_id : slugp(p)}}">{{p.producerName}}</router-link>
                             </span>
                             on {{p.publishedDate | date }}</p>
@@ -83,5 +83,16 @@ a:hover {
   color: black;
   text-decoration: none;
 }
+.p20{
+    padding-top:20px;
+}
+.p10{
+    padding-top:10px;
+}
+.image img{
+    padding-top:10px;
+    width: 80%;
+}
+    .mt10{padding-top:10px;}
 </style>
 
