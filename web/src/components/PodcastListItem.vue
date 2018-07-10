@@ -1,7 +1,35 @@
 
 
 <template>
-        <article class="pv4 bt bb b--black-10 ph3 ph0-l" v-show="!isLoading"  >
+
+
+    <div class="column " v-show="!isLoading" >
+        <div class="card ">
+            <div class="card-content">
+                <div class="media">
+                    <div class="media-left">
+                        <figure class="image is-96x96" @click="playMp3" >
+                            <img  style="" :src="isPlaying && mp3 == p.mp3 ? '/static/img/play.png': isMp3Loading && mp3 == p.mp3  ? '/static/img/play-wip.gif':'/static/img/play-pause.png'" alt="Image">
+                        </figure>
+                    </div>
+                    <div class="media-content">
+                        <p class="title is-4 no-padding" >
+                            <a @click="playMp3">{{p.title}}</a>
+                            <!--<router-link  class="no-underline" :to="`/shows/${slug(p)}`">{{p.title}}</router-link>-->
+                        </p>
+                        <p><span class="title is-6">
+                            by  <router-link :to="{name:'producerShows',params: {producer_id : slugp(p)}}">{{p.producerName}}</router-link>
+                            </span>
+                            on {{p.publishedDate | date }}</p>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+    
+    <!--
+        <article class="pv4 bt bb b--black-10 ph3 ph0-l" v-show="!isLoading"  style="display: none;" >
             <div class="flex flex-column flex-row-ns">
                 <div class="w-100 w-60-ns pr3-ns order-2 order-1-ns">
                     <h1 class="f3 athelas mt0 lh-title">
@@ -20,23 +48,29 @@
                 <span class="f6  gray"> on {{p.publishedDate | date }}</span>
             </p>
         </article>
+        
+        -->
 
 </template>
 
 <script>
-import {mapGetters} from 'vuex';
+import {mapGetters, mapActions} from 'vuex';
     
 export default {
   name: "PodcastsListItem",
   props: ["p"],
-    computed:{...mapGetters(['isLoading'])},
+    computed:{...mapGetters(['isLoading', 'isPlaying', 'mp3', 'isMp3Loading'])},
   methods: {
+      ...mapActions(['play']),
     slug: function(p) {
       return `${p.id}-${this.$options.filters.slugify(p.title)}`;
     },
     slugp: function(p) {
       return `${p.producerId}-${this.$options.filters.slugify(p.producerName)}`;
-    }
+    },
+      playMp3(){
+          this.play(this.p.mp3);
+      }
   }
 };
 </script>

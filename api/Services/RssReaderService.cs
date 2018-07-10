@@ -16,6 +16,7 @@ namespace CoreJsNoise.Services
             Console.WriteLine("Updating : "+ rssFeed);
                 
             var itemList = FeedReader.ReadAsync(rssFeed).Result.Items;
+            
             var resp = new List<ShowParsedDto>();
             foreach (var item in itemList)
             {
@@ -29,6 +30,7 @@ namespace CoreJsNoise.Services
                         url = (item.SpecificItem as Rss20FeedItem)?.Enclosure?.Url;
                     
                     var mp3 = url.Substring(0, 3 + url.IndexOf("mp3"));
+                  
 //                    Trace.WriteLine(
 //                        $"{item.Id}:{item.Title} ({item.PublishingDate}) - {mp3} {item.Description} ||| {item.Author}");
                     resp.Add(new ShowParsedDto
