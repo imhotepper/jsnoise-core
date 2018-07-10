@@ -10,7 +10,7 @@
                     <div class="container ">
                         <div class="is-centered">
                             <figure class="image is-64x64" @click="playMp3" >
-                                <img  style="" :src="isPlaying && mp3 == p.mp3 ? '/static/img/play.png': isMp3Loading && mp3 == p.mp3  ? '/static/img/play-wip.gif':'/static/img/play-pause.png'" alt="Image">
+                                <img  style="" :src="isPlaying && mp3 == p.mp3 ? '/static/img/play-stop.png': isMp3Loading && mp3 == p.mp3  ? '/static/img/play-wip.gif':'/static/img/play-pause.png'" alt="Image">
                             </figure>    
                         </div>
                             
