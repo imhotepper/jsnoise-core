@@ -1,5 +1,6 @@
-body {
-    background: #041221;
+html,body {
+    /*background: #041221 !important;*/
+    height: 100%;
 }  
 
 .card-content{
