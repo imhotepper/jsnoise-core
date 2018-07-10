@@ -30,7 +30,7 @@
             <div>
 
                 <div class="column " v-show="isLoading">
-                    <div class="card ">
+                    <div class=" card">
                         <div class="card-content">
                             <div class="content">
                                 <div class="media-content">
