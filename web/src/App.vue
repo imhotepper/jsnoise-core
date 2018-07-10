@@ -17,7 +17,7 @@
       
       <router-view/>
     
-      <footer class="footer">
+      <footer class="footer" hidden>
         <div class="container">
           <div class="content has-text-centered">
             <div class="soc"  style="display: none">
