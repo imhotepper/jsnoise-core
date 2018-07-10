@@ -96,15 +96,11 @@ namespace CoreJsNoise.Controllers
         [Authorize]
         public ActionResult<List<ProducerAggregateDto>> GetProducers()
         {
-
-            var resp =_db.Producers.GroupBy(x => x.Name)
-                .Select(x => new ProducerAggregateDto {Name = x.Key, Count = x.Count()}).ToList();
-
-           resp = (from p in _db.Producers
+           var resp = (from p in _db.Producers
                 from s in _db.Shows
                     where p.Id == s.ProducerId
-                 group p by p.Name into grp
-                     select new ProducerAggregateDto{Name = grp.Key, Count = grp.Count()}).ToList();
+                 group p by new{ Id = p.Id, Name = p.Name } into grp
+                     select new ProducerAggregateDto{Name = grp.Key.Name, Id=grp.Key.Id, Count = grp.Count()}).ToList();
             
             return resp;
         }

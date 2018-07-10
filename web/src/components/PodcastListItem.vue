@@ -21,7 +21,7 @@
                       <b>  <a class="title is-4" @click="playMp3">{{p.title}}</a> </b>
                     <p class="control ">
                            <span class="">
-                            by  <router-link class="button is-text"  :to="{name:'producerShows',params: {producer_id : slugp(p)}}">{{p.producerName}}</router-link>
+                            by  <router-link class="is-text"  :to="{name:'producerShows',params: {producer_id : slugp(p)}}">{{p.producerName}}</router-link>
                             </span>
                         on {{p.publishedDate | date }}
                     </p>

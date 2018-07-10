@@ -26,7 +26,9 @@
 
                 </div>
                 <div class="card-content">
-                    <div v-for="p in producers" :key="p.feedUrl"> {{p.name}} ({{p.count}} shows)</div>
+                    <div v-for="p in producers" :key="p.feedUrl">
+                        <router-link class=" is-text"  :to="{name:'producerShows',params: {producer_id : slugp(p)}}">{{p.name}}</router-link>
+                         ({{p.count}} shows)</div>
                 </div>
 
             </div>
@@ -58,6 +60,8 @@
             },
             load: function () {
                 this.loadProducers();
+            }, slugp: function(p) {
+                return `${p.id}-${this.$options.filters.slugify(p.name)}`;
             }
         },
         created: function () {
