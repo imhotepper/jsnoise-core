@@ -21,9 +21,7 @@ namespace CoreJsNoise.Handlers
     public class ProducerGetAllHandler : IRequestHandler<ProducerGetAllRequest, ShowsResponse>
     {
         private PodcastsCtx _db;
-
         public ProducerGetAllHandler(PodcastsCtx db) => _db = db;
-
 
         public Task<ShowsResponse> Handle(ProducerGetAllRequest request, CancellationToken cancellationToken)
         {

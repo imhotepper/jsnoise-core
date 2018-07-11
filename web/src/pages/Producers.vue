@@ -1,4 +1,7 @@
 <template>
+<div>
+    
+
 
     <div class="container">
         <div id="flow">
@@ -25,22 +28,39 @@
                     </form>
 
                 </div>
+                
+                <div class="card-content"  v-show="isLoading">
+                    <div class="column ">
+                        <div class=" card1">
+                            <div class="card-content">
+                                <div class="content">
+                                    <div class="media-content">
+                                        <p class="title is-4 no-padding">Loading ... </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="card-content">
                     <div v-for="p in producers" :key="p.feedUrl">
                         <router-link class=" is-text"  :to="{name:'producerShows',params: {producer_id : slugp(p)}}">{{p.name}}</router-link>
-                         ({{p.count}} shows)</div>
+                        ({{p.count}} shows)</div>
                 </div>
 
             </div>
         </div>
 
     </div>
+</div>
+   
 </template>
 <script>
     import {mapGetters, mapActions} from 'vuex'
 
     export default {
-        computed: {...mapGetters(['producers'])},
+        computed: {...mapGetters(['producers','isLoading'])},
         data: function () {
             return {
                 producer: {name: '', website: '', feedUrl: ''}

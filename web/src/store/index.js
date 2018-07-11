@@ -53,7 +53,6 @@ export default new Vuex.Store({
         },
         playMp3:(state,mp3) => {
             //https://www.binarytides.com/using-html5-audio-element-javascript/
-          //  if (state.isPlaying == true){ state.isPlaying = false; return;} 
             if ((state.player == null)) state.player = new Audio();
 
             if (state.mp3 == mp3) {
@@ -64,15 +63,10 @@ export default new Vuex.Store({
                 state.isMp3Loading = false;
                 
             }else{
-              
-                console.log('play: '+ mp3)
                 state.player.src = mp3;
                 state.mp3 = mp3;
                 state.isPlaying = false;
-
                 state.isMp3Loading = true;
-              
-                console.log("should change image: ",state.isMp3Loading == true && state.mp3 == mp3 )
                 state.player.play().then(
                     function () {
                         state.isPlaying = true;
@@ -124,9 +118,16 @@ export default new Vuex.Store({
                      console.log(err);});
         },
         loadProducers(context) {
+            context.commit('isLoading', true);
             Vue.axios.get('/api/admin/producers')
-                .then((resp) => context.commit("setProducers", resp.data))
-                .catch((err) => console.log(err));
+                .then((resp) => {
+                    context.commit("setProducers", resp.data);
+                    context.commit('isLoading', false);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    context.commit('isLoading', true);
+                });
         },
         saveProducer(context, producer) {
             Vue.axios.post('/api/admin/producers', producer)
