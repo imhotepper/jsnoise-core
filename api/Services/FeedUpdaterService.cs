@@ -35,7 +35,7 @@ namespace CoreJsNoise.Services
         {
             try
             {
-                var items = _rssReader.Parse(producer.FeedUrl);
+                var items = new RssReader().Parse(producer.FeedUrl);
                 var itemsToSave = items.Select(x => new Show
                 {
                     Title = x.Title,
