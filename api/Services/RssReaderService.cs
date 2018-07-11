@@ -13,10 +13,10 @@ namespace CoreJsNoise.Services
     {
         public List<ShowParsedDto> Parse(string rssFeed)
         {
-            Console.WriteLine("Updating : "+ rssFeed);
-                
-            var itemList = FeedReader.ReadAsync(rssFeed).Result.Items;
             
+            var itemList = FeedReader.ReadAsync(rssFeed).Result.Items;
+            Console.WriteLine("Parsing : " + rssFeed);
+
             var resp = new List<ShowParsedDto>();
             foreach (var item in itemList)
             {
@@ -28,11 +28,9 @@ namespace CoreJsNoise.Services
                     var url = (item.SpecificItem as MediaRssFeedItem)?.Enclosure?.Url;
                     if (string.IsNullOrWhiteSpace(url))
                         url = (item.SpecificItem as Rss20FeedItem)?.Enclosure?.Url;
-                    
+
                     var mp3 = url.Substring(0, 3 + url.IndexOf("mp3"));
-                  
-//                    Trace.WriteLine(
-//                        $"{item.Id}:{item.Title} ({item.PublishingDate}) - {mp3} {item.Description} ||| {item.Author}");
+
                     resp.Add(new ShowParsedDto
                     {
                         ShowId = item.Id,
@@ -44,7 +42,7 @@ namespace CoreJsNoise.Services
                 }
             }
 
-            return resp.GroupBy(x=> new {id = x.ShowId, title = x.Title}).Select(x=>x.First()).ToList();
-    }
+            return resp.GroupBy(x => new {id = x.ShowId, title = x.Title}).Select(x => x.First()).ToList();
+        }
     }
 }

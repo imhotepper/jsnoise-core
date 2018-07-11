@@ -26,7 +26,7 @@ namespace CoreJsNoise.Handlers
         public Task<int> Handle(ShowsUpdateRequest request, CancellationToken cancellationToken)
         {
             var count = _db.Shows.Count();
-            _feedUpdater.Update();
+            _feedUpdater.UpdateAll();
             var result = _db.Shows.Count() - count;
             return Task.FromResult(result);
         }

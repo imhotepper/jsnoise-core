@@ -27,7 +27,7 @@ namespace CoreJsNoise.Services
             UpdateShows(producer, items);
         }
 
-        public void Update()
+        public void UpdateAll()
         {
             var producers = _db.Producers.Where(x => !string.IsNullOrWhiteSpace(x.FeedUrl)).AsNoTracking().ToList();
 
@@ -47,7 +47,7 @@ namespace CoreJsNoise.Services
             var items = new List<ShowParsedDto>();
             try
             {
-                items = new RssReader().Parse(producer.FeedUrl);
+                items = _rssReader.Parse(producer.FeedUrl);
 
                 Console.WriteLine("---------------------------");
                 Console.WriteLine(producer.Name + " - parsed ok.");
