@@ -28,14 +28,47 @@ namespace CoreJsNoise.Services
 //                .ForEach(p => UpdateShows(p));
 
             var producers = _db.Producers.Where(x => !string.IsNullOrWhiteSpace(x.FeedUrl)).AsNoTracking().ToList();
-            Parallel.ForEach(producers, (p) => UpdateShows(p));
+
+            var toUpdate = new Dictionary<Producer, List<ShowParsedDto>>();
+            
+            Parallel.ForEach(producers, (p) => toUpdate.Add(p, GetShows(p)));
+            
+            foreach (var keyValuePair in toUpdate)
+            {
+                Console.WriteLine("---------------------------");
+                Console.WriteLine("Db Updating: " + keyValuePair.Key.Name);
+                Console.WriteLine("---------------------------");
+                UpdateShows(keyValuePair.Key, keyValuePair.Value);
+            }
         }
 
-        public void UpdateShows(Producer producer)
+       
+        
+         List<ShowParsedDto> GetShows(Producer producer)
+        {
+            var items = new List<ShowParsedDto>();
+            try
+            {
+                 items = new RssReader().Parse(producer.FeedUrl);
+               
+                Console.WriteLine("---------------------------");
+                Console.WriteLine(producer.Name);
+                Console.WriteLine("---------------------------");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error while updating feed: {producer.Name}: \n\r" + e.Message);
+                Console.WriteLine(e);                
+            }
+
+            return items;
+
+        }
+
+        public void UpdateShows(Producer producer, List<ShowParsedDto> items)
         {
             try
             {
-                var items = new RssReader().Parse(producer.FeedUrl);
                 var itemsToSave = items.Select(x => new Show
                 {
                     Title = x.Title,
