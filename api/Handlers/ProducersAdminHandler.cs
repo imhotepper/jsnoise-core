@@ -26,7 +26,8 @@ namespace CoreJsNoise.Handlers
                 where p.Id == s.ProducerId
                 group p by new {Id = p.Id, Name = p.Name}
                 into grp
-                select new ProducerAggregateDto {Name = grp.Key.Name, Id = grp.Key.Id, Count = grp.Count()}).ToList();
+                select new ProducerAggregateDto {Name = grp.Key.Name, Id = grp.Key.Id, Count = grp.Count()})
+                .ToList();
 
             return Task.FromResult(resp);
         }
