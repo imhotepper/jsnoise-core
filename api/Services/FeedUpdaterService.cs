@@ -29,7 +29,6 @@ namespace CoreJsNoise.Services
 
         public void UpdateShows(Producer producer)
         {
-            //TODO: make just one call to check what exists
             try
             {
                 var items = _rssReader.Parse(producer.FeedUrl);

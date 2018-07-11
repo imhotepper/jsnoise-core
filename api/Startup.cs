@@ -10,6 +10,7 @@ using AutoMapper;
 using CoreJsNoise.Domain;
 using CoreJsNoise.Dto;
 using CoreJsNoise.Services;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -53,7 +54,8 @@ namespace CoreJsNoise
             services.AddScoped<PodcastsCtx>();
             services.AddScoped<FeedUpdaterService>();
             services.AddScoped<RssReader>();
-
+            services.AddMediatR();
+            
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             

@@ -19,7 +19,7 @@
                                 <form @submit.prevent="logMeIn">
                                     <input type="text" v-model="username"  placeholder="user" required>
                                     <input type="password" v-model="password" required>
-                                    <button >login</button>
+                                    <button class="button">login</button>
                                 </form>
                             </div>
 

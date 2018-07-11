@@ -13,3 +13,9 @@
 <script>  
 </script>
 
+<style>
+    html, body{
+        background:white !important;
+    }
+</style>
+

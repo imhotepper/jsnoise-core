@@ -12,4 +12,4 @@ namespace CoreJsNoise.Dto
         public string ProducerName { get; set; }
         public int ProducerId { get; set; }
     }
-}
+}  
