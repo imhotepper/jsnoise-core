@@ -21,6 +21,11 @@ namespace CoreJsNoise.Services
             _rssReader = rssReader;
          }
 
+        public void UpdateShows(Producer producer)
+        {
+            var items = GetShows(producer);
+            UpdateShows(producer,items);
+        }
 
         public void Update()
         {
@@ -41,7 +46,7 @@ namespace CoreJsNoise.Services
                 UpdateShows(keyValuePair.Key, keyValuePair.Value);
             }
         }
-
+ 
        
         
          List<ShowParsedDto> GetShows(Producer producer)
@@ -65,10 +70,13 @@ namespace CoreJsNoise.Services
 
         }
 
-        public void UpdateShows(Producer producer, List<ShowParsedDto> items)
+        
+
+        private void UpdateShows(Producer producer, List<ShowParsedDto> items)
         {
             try
             {
+                
                 var itemsToSave = items.Select(x => new Show
                 {
                     Title = x.Title,
