@@ -3,6 +3,7 @@ using System.Linq;
 using AutoMapper;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using CoreJsNoise.Domain;
 using CoreJsNoise.Dto;
 using Microsoft.EntityFrameworkCore;
@@ -23,8 +24,11 @@ namespace CoreJsNoise.Services
 
         public void Update()
         {
-            _db.Producers.Where(x=>!string.IsNullOrWhiteSpace( x.FeedUrl)).AsNoTracking().ToList()
-                .ForEach(p => UpdateShows(p));
+//            _db.Producers.Where(x=>!string.IsNullOrWhiteSpace( x.FeedUrl)).AsNoTracking().ToList()
+//                .ForEach(p => UpdateShows(p));
+
+            var producers = _db.Producers.Where(x => !string.IsNullOrWhiteSpace(x.FeedUrl)).AsNoTracking().ToList();
+            Parallel.ForEach(producers, (p) => UpdateShows(p));
         }
 
         public void UpdateShows(Producer producer)
