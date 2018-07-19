@@ -26,6 +26,7 @@ using Newtonsoft.Json;
 using Npgsql;
 using ZNetCS.AspNetCore.Authentication.Basic;
 using ZNetCS.AspNetCore.Authentication.Basic.Events;
+using SpaApiMiddleware;
 
 namespace CoreJsNoise
 {
@@ -54,12 +55,14 @@ namespace CoreJsNoise
             services.AddScoped<PodcastsCtx>();
             services.AddScoped<FeedUpdaterService>();
             services.AddScoped<RssReader>();
+            
+            services.AddAutoMapper();
             services.AddMediatR();
             
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
             
-           
                services .AddAuthentication(BasicAuthenticationDefaults.AuthenticationScheme)
                 .AddBasicAuthentication(
                     options =>
@@ -95,7 +98,6 @@ namespace CoreJsNoise
                         };
                     });
             
-            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -105,43 +107,11 @@ namespace CoreJsNoise
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                app.UseHsts();
-            }
 
-          //  app.UseStatusCodePagesWithRedirects("/");
-//            app.UseStatusCodePages( async context =>
-//            {
-//                if (context.HttpContext.Response.StatusCode == 404)
-//                {
-//                    var pathPars = context.HttpContext.Request.Path.ToUriComponent().ToString();
-//                     context.HttpContext.Response.Redirect($"/{pathPars}");
-////                        `.WriteAsync(
-////                        "Status code page, status code: " + 
-////                        context.HttpContext.Response.StatusCode);
-//                }
-//                
-//
-//            });
+
+            app.UseSpaApiOnly();
             
             
-            app.Use(async (context, next) => 
-            { 
-                await next(); 
-                var path = context.Request.Path.Value;
-
-                if (!path.StartsWith("/api") && !Path.HasExtension(path)) 
-                { 
-                    context.Request.Path = "/index.html"; 
-                    await next(); 
-                } 
-            });            
-
-            
-            
-            app.UseMiddleware<AutoMapperMiddleware>();
-
            // app.UseResponseCompression();
         
             //basic auth
@@ -160,54 +130,6 @@ namespace CoreJsNoise
                     new DatabaseFacade(ctx).Migrate();
                 }
             }
-        }
-    }
-    
-    public static class RequestAutoMapperMiddleware
-    {
-        public static IApplicationBuilder UseRequestCulture(
-            this IApplicationBuilder builder)
-        {
-            return builder.UseMiddleware<AutoMapperMiddleware>();
-        }
-    }
-
-    public class AutoMapperMiddleware
-    {
-        private readonly RequestDelegate next;
-
-        public AutoMapperMiddleware(RequestDelegate next)
-        {
-            this.next = next;
-        }
-
-        public async Task Invoke(HttpContext context /* other dependencies */)
-        {
-            try
-            {
-              
-                Mapper.Initialize(cfg =>
-                {
-                    cfg.CreateMap<Show, ShowParsedDto>();
-                    cfg.CreateMap<ShowParsedDto, Show>();
-                    cfg.CreateMap<List<ShowParsedDto>, List<Show>>();
-                    cfg.CreateMap<Producer, ProducersController.ProducerDto>();
-                    cfg.CreateMap<Show, ShowDto>();
-                    
-                    
-                });
-              //  AutoMapper.Mapper.Configuration.AssertConfigurationIsValid();
-
-
-            }
-            catch (InvalidOperationException ex)
-            {
-                //DoNothing since is initialized already
-                Console.WriteLine("Automapper error: "+ ex.Message);
-            }
-
-           
-            await next(context);
         }
     }
 }

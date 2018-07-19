@@ -4,10 +4,9 @@ require 'net/http'
 
 
 task :default do
-   puts 'start'
-         uri = URI.parse("http://core-jsnoise.herokuapp.com/api/producers/update")
+   puts 'update started'
+         uri = URI.parse("http://jsnoise.herokuapp.com/api/producers/update")
          response = Net::HTTP.get_response(uri)
          puts response.inspect # this line not getting printed
-
-        puts 'end!'
+    puts 'update ended!'
 end
