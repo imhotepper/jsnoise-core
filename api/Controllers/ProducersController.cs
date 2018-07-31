@@ -40,7 +40,7 @@ namespace CoreJsNoise.Controllers
             return Ok(await _mediator.Send(new ShowsUpdateRequest()));
         }
 
-        [HttpGet]
+        [HttpGet] 
         [Route("/api/producers/{id}/shows")]
         public async Task<ActionResult<ShowsResponse>> GetAll(int id, string q, int? page = 1)
         {

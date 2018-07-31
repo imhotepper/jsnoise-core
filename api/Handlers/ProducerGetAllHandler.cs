@@ -25,7 +25,7 @@ namespace CoreJsNoise.Handlers
         {
             var pageSize = 20;
             request.Query = request.Query?.ToLowerInvariant();
-            var shows = _db.Shows
+            var shows = _db.Shows 
                             .Where(x => x.ProducerId == request.ProducerId);
             if (!string.IsNullOrWhiteSpace(request.Query))
                 shows = shows.Where(x =>
@@ -33,9 +33,8 @@ namespace CoreJsNoise.Handlers
             var counts = shows.Count();
             var resp = shows
                 .OrderByDescending(x=>x.PublishedDate)
-                .Skip(pageSize * (request.Page??1 - 1))
+                .Skip(pageSize * ((request.Page??1) - 1))
                 .Take(pageSize)
-                .OrderByDescending(x=>x.PublishedDate)
                 .Select(x => new ShowDto()
                 {
                     Id = x.Id,
