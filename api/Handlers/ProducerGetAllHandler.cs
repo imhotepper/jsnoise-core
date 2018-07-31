@@ -25,12 +25,14 @@ namespace CoreJsNoise.Handlers
         {
             var pageSize = 20;
             request.Query = request.Query?.ToLowerInvariant();
-            var shows = _db.Shows.Where(x => x.ProducerId == request.ProducerId);
+            var shows = _db.Shows
+                            .Where(x => x.ProducerId == request.ProducerId);
             if (!string.IsNullOrWhiteSpace(request.Query))
                 shows = shows.Where(x =>
                     x.Title.ToLower().Contains(request.Query) || x.Description.ToLower().Contains(request.Query));
             var counts = shows.Count();
             var resp = shows
+                .OrderByDescending(x=>x.PublishedDate)
                 .Skip(pageSize * (request.Page??1 - 1))
                 .Take(pageSize)
                 .OrderByDescending(x=>x.PublishedDate)
