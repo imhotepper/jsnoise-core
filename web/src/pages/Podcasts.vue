@@ -17,7 +17,7 @@
                     <div class="control is-expanded">
                         <input class="input has-text-centered"
                               v-model="search"
-                               type="search" placeholder="» » » » » » what are you looking for ? « « « « « «">
+                               type="search" placeholder="» what are you looking for ? «">
                     </div>
                     <div class="control">
                         <a class="button is-info">Search</a>
