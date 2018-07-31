@@ -16,8 +16,6 @@ namespace CoreJsNoise.Handlers
         public int? Page { get; set; }
     }
 
-
-
     public class ProducerGetAllHandler : IRequestHandler<ProducerGetAllRequest, ShowsResponse>
     {
         private PodcastsCtx _db;
@@ -32,9 +30,10 @@ namespace CoreJsNoise.Handlers
                 shows = shows.Where(x =>
                     x.Title.ToLower().Contains(request.Query) || x.Description.ToLower().Contains(request.Query));
             var counts = shows.Count();
-            var resp = shows.OrderByDescending(x=>x.PublishedDate)
+            var resp = shows
                 .Skip(pageSize * (request.Page??1 - 1))
                 .Take(pageSize)
+                .OrderByDescending(x=>x.PublishedDate)
                 .Select(x => new ShowDto()
                 {
                     Id = x.Id,
