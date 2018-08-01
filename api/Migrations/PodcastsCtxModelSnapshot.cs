@@ -19,7 +19,7 @@ namespace CoreJsNoise.Migrations
                 .HasAnnotation("ProductVersion", "2.1.1-rtm-30846")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("WebApplication1.Domain.Producer", b =>
+            modelBuilder.Entity("CoreJsNoise.Domain.Producer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -35,7 +35,7 @@ namespace CoreJsNoise.Migrations
                     b.ToTable("Producers");
                 });
 
-            modelBuilder.Entity("WebApplication1.Domain.Show", b =>
+            modelBuilder.Entity("CoreJsNoise.Domain.Show", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -58,9 +58,9 @@ namespace CoreJsNoise.Migrations
                     b.ToTable("Shows");
                 });
 
-            modelBuilder.Entity("WebApplication1.Domain.Show", b =>
+            modelBuilder.Entity("CoreJsNoise.Domain.Show", b =>
                 {
-                    b.HasOne("WebApplication1.Domain.Producer", "Producer")
+                    b.HasOne("CoreJsNoise.Domain.Producer", "Producer")
                         .WithMany("Shows")
                         .HasForeignKey("ProducerId")
                         .OnDelete(DeleteBehavior.Cascade);

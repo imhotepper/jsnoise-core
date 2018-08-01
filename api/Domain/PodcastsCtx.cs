@@ -13,8 +13,11 @@ namespace CoreJsNoise.Domain
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Producer>().ToTable("Producers");
-            modelBuilder.Entity<Show>().ToTable("Shows");
+            modelBuilder.Entity<Producer>()
+                .ToTable("Producers");
+            modelBuilder.Entity<Show>()
+                .ToTable("Shows")                
+                .HasIndex(i => i.ProducerId);
         }
         
     }
