@@ -8,3 +8,4 @@
 /Users/daiot/RiderProjects/jsnoise-core/Worker/obj/Debug/netcoreapp2.1/Worker.AssemblyInfo.cs
 /Users/daiot/RiderProjects/jsnoise-core/Worker/obj/Debug/netcoreapp2.1/Worker.dll
 /Users/daiot/RiderProjects/jsnoise-core/Worker/obj/Debug/netcoreapp2.1/Worker.pdb
+/Users/daiot/RiderProjects/jsnoise-core/Worker/obj/Debug/netcoreapp2.1/Worker.csprojAssemblyReference.cache
