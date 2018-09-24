@@ -7,6 +7,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using BeatPulse;
 
 namespace CoreJsNoise
 {
@@ -19,6 +20,12 @@ namespace CoreJsNoise
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+        .UseBeatPulse(options=>
+        {
+            options.ConfigurePath(path:"/api/health") //default hc
+                .ConfigureTimeout(milliseconds:1500) // default -1 infinitely
+                .ConfigureDetailedOutput(detailedOutput:true); //default false
+        })
                 .UseStartup<Startup>();
     }
 }

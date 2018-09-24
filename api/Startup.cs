@@ -7,6 +7,8 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using BeatPulse;
+using BeatPulse.UI;
 using CoreJsNoise.Domain;
 using CoreJsNoise.Dto;
 using CoreJsNoise.Services;
@@ -27,6 +29,8 @@ using Npgsql;
 using ZNetCS.AspNetCore.Authentication.Basic;
 using ZNetCS.AspNetCore.Authentication.Basic.Events;
 using SpaApiMiddleware;
+using BeatPulse.System;
+using BeatPulse.Network;
 
 namespace CoreJsNoise
 {
@@ -51,6 +55,16 @@ namespace CoreJsNoise
             //  services.AddEntityFrameworkNpgsql().AddDbContext<PodcastsCtx>(options =>options.UseNpgsql(conStr));
 
             services.AddDbContext<PodcastsCtx>(options => options.UseNpgsql(conStr));
+            
+            
+            services.AddBeatPulseUI();
+
+            services.AddBeatPulse(setup =>
+            {
+                setup.AddNpgSql(conStr);
+                setup.AddWorkingSetLiveness(536870912);
+              
+            });
 
             services.AddScoped<PodcastsCtx>();
             services.AddScoped<FeedUpdaterService>();
@@ -111,6 +125,9 @@ namespace CoreJsNoise
 
             app.UseSpaApiOnly();
             
+            
+            app.UseBeatPulseUI();
+
             
            // app.UseResponseCompression();
         
