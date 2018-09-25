@@ -15,12 +15,12 @@
             <div class="box mb-5">
                 <div class="field has-addons">
                     <div class="control is-expanded">
-                        <input class="input has-text-centered"
+                        <input class="input has-text-centered px30"
                               v-model="search"
-                               type="search" placeholder="» what are you looking for ? «">
+                               type="search" placeholder="looking for ...">
                     </div>
                     <div class="control">
-                        <a class="button is-info">Search</a>
+                        <a class="button is-info px30">Search</a>
                     </div>
                 </div>
             </div>
@@ -178,5 +178,6 @@ export default {
 </script>
 
 <style>
+  
    
 </style>

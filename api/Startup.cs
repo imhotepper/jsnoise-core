@@ -51,20 +51,16 @@ namespace CoreJsNoise
 
             if (!string.IsNullOrWhiteSpace(pgConn))
                 conStr = HerokuPGParser.ConnectionHelper.BuildExpectedConnectionString(pgConn);
-
-            //  services.AddEntityFrameworkNpgsql().AddDbContext<PodcastsCtx>(options =>options.UseNpgsql(conStr));
-
+           
             services.AddDbContext<PodcastsCtx>(options => options.UseNpgsql(conStr));
-            
-            
-            services.AddBeatPulseUI();
-
+                                    
             services.AddBeatPulse(setup =>
             {
                 setup.AddNpgSql(conStr);
                 setup.AddWorkingSetLiveness(536870912);
               
             });
+            services.AddBeatPulseUI();
 
             services.AddScoped<PodcastsCtx>();
             services.AddScoped<FeedUpdaterService>();

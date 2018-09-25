@@ -112,4 +112,9 @@ a.banner:hover {
 a {
   /*text-decoration: none !important;*/
 }
+
+
+.px30{
+  font-size: 30px;
+}
 </style>
