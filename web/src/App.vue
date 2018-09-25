@@ -113,8 +113,9 @@ a {
   /*text-decoration: none !important;*/
 }
 
-
-.px30{
-  font-size: 30px;
+@media screen and (min-width: 600px) {
+  .px30 {
+    font-size: 30px;
+  }
 }
 </style>
