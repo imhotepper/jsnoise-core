@@ -16,6 +16,11 @@ Vue.use(VueAxios, axios);
 Vue.use(uiv);
 Vue.config.productionTip = false
 
+import CripLoading from "crip-vue-loading"
+
+// Install component in to Vue instance and inject in to axios.
+Vue.use(CripLoading, {axios})
+
 Vue.prototype.$eventHub = new Vue(); // Global event bus
 
 Vue.filter("date", function (val) {

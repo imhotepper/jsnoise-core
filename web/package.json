@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap": "^4.0.0",
+    "crip-vue-loading": "^1.2.5",
     "npm": "^6.0.0",
     "uiv": "^0.21.3",
     "vue": "^2.5.2",
