@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { stat } from 'fs';
 
 Vue.use(Vuex)
 
@@ -14,9 +13,8 @@ export default new Vuex.Store({
         q: '',
         producers: [],
         isLoggedIn: !!localStorage.getItem("auth"),
-        isLoading:false,
-        
-        player : null,
+        isLoading:false,        
+        player : new Audio(),
         isPlaying:false,
         mp3:null,
         isMp3Loading:false
@@ -33,7 +31,8 @@ export default new Vuex.Store({
         isLoading:(state) => state.isLoading,
         isPlaying:(state) => state.isPlaying,
         mp3:(state) => state.mp3,
-        isMp3Loading:(state) => state.isMp3Loading
+        isMp3Loading:(state) => state.isMp3Loading,
+        player:(state) => state.player
     },
     mutations: {
         setPodcasts(state, details) {
@@ -51,40 +50,36 @@ export default new Vuex.Store({
                 state.last = true;    
             }
         },
-        playMp3:(state,mp3) => {
-            //https://www.binarytides.com/using-html5-audio-element-javascript/
-            if ((state.player == null)) state.player = new Audio();
-
-            if (state.mp3 == mp3) {
-                state.isPlaying = false;
-                state.player.pause();
-                state.player.currentTime = 0;
-                state.mp3 = null;
-                state.isMp3Loading = false;
-                
-            }else{
-                state.player.src = mp3;
-                state.mp3 = mp3;
-                state.isPlaying = false;
-                state.isMp3Loading = true;
-                state.player.play().then(
-                    function () {
-                        state.isPlaying = true;
-                        state.isMp3Loading = false;
-                    },
-                    ()=> state.isMp3Loading = false
-                );
-            }
-            
-        }
+        isPlaying:(state,isPlaying) => state.isPlaying = isPlaying,
+        isMp3Loading:(state,isMp3Loading) => state.isMp3Loading = isMp3Loading,
+        setMp3:(state, mp3) => state.mp3 =  mp3
     },
     actions: {
-        play(context, mp3){
-            context.commit('playMp3',mp3);
+        play({commit, getters, state}, mp3){
+           var player = getters.player;
+            if (player.src == mp3) {
+                commit('isPlaying',false);
+                player.pause();
+                player.currentTime = 0;
+                player.src = null;
+                commit('isMp3Loading',false);
+            //start playing    
+            }else{
+                player.src = mp3;
+                commit('setMp3',mp3);
+                commit('isPlaying',false);
+                commit('isMp3Loading',true);
+                player.play().then(
+                    function () {
+                        commit('isPlaying',true);
+                        commit('isMp3Loading',false);
+                    },
+                    ()=> commit('isMp3Loading',false)
+                );
+            }
         },
         loadPodcast(context, id) {
             context.commit('isLoading', true);
-            console.log('isLoading:', true);
             Vue.axios
                 .get(`/api/shows/${id}`)
                 .then(resp =>{
@@ -135,7 +130,6 @@ export default new Vuex.Store({
                     context.dispatch('loadProducers');
                 })
                 .catch((err) => console.log(err));
-
         },
         login(context,userData){
             var auth =  btoa(`${userData.username}:${userData.password}`);
