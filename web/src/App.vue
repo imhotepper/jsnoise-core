@@ -1,8 +1,5 @@
 <template>
-<!-- Begin page content -->
   <div>
-   
-
     <div >
       <!-- START NAV -->
       <nav class="navbar">
@@ -33,12 +30,8 @@
           </div>
         </div>
       </footer>
-
     </div>
-
-
   </div>
-
 </template>
 
 <script>
@@ -56,7 +49,7 @@ export default {
       this.$router.push({ name: "producers" });
     },
     logout: function() {
-      console.log("logging out ....");
+     // console.log("logging out ....");
       this.isAuthenticated = false;
       this.$router.push({ name: "podcasts" });
     },
@@ -82,7 +75,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   /*margin-top: 60px;*/
 }
-
 
 .banner{
   color: #007bff;

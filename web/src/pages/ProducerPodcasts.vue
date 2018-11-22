@@ -1,10 +1,5 @@
 <template>
-
-
-
     <div>
-        
-
         <div class="container">
             <div id="flow">
                 <span class="flow-1"></span>
@@ -27,10 +22,8 @@
                         </div>
                     </div>
                 </form>
-                <!-- Developers -->
-
+           
                 <div>
-
                     <div class="column " v-show="isLoading">
                         <div class="card ">
                             <div class="card-content">
@@ -43,8 +36,6 @@
                             </div>
                         </div>
                     </div>
-
-
                     <div class="column" v-show="podcasts.length == 0 && !isLoading">
                         <div class="card ">
                             <div class="card-content">
@@ -57,9 +48,7 @@
                         </div>
                     </div>
 
-
                     <PodcastListItem v-show="!isLoading" v-for="p in podcasts" :key="p.id" :p="p" ></PodcastListItem>
-
 
                     <div class="column ">
                         <div class="card-content">
@@ -67,7 +56,6 @@
                                 <p class="title is-4 no-padding" >
                                     <a  v-show="!first" @click="prev" title="Previous"><<<<<<</a>
                                 </p>
-
                             </div>
                             <div class="is-pulled-right">
                                 <p class="title is-4 no-padding" >
@@ -77,31 +65,22 @@
 
                         </div>
                     </div>
-
-
-
-
                 </div>
-                <!-- End Developers -->
-                <!-- End Staff -->
             </div>
         </div>
-
-
     </div>
-
-    
 </template>
 <script>
 import PodcastListItem from "@/components/PodcastListItem";
-import { mapGetters, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   name: "Podcasts",
   props: ["producer_id"],
   components: { PodcastListItem },
   computed: {
-     ...mapGetters(['podcasts','totalPages','first','last', 'isLoading']),
+    // ...mapGetters(['podcasts','totalPages','first','last', 'isLoading']),
+     ...mapState(['podcasts','totalPages','first','last', 'isLoading']),
     pid: function() {
       return (this.producer_id || "").split("-")[0];
     }

@@ -1,8 +1,5 @@
 <template>
 <div>
-
-
-
     <div class="column " v-show="isLoading">
         <div class="card ">
             <div class="card-content">
@@ -15,9 +12,6 @@
             </div>
         </div>
     </div>
-
-
-
     <div class="column " v-show="!isLoading" >
         <div class="card ">
             <div class="card-content">
@@ -38,30 +32,27 @@
                 </div>
             </div>
         </div>
-    </div>
-    
-    
+    </div> 
 </div>
-
 </template>
 
 <script>
-import {mapGetters, mapActions} from 'vuex'
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   props: ["id"],
-  computed:{...mapGetters(['podcast', 'isLoading'])},
+  computed: { ...mapGetters(["podcast", "isLoading"]) },
   methods: {
-    ...mapActions(['loadPodcast']),
+    ...mapActions(["loadPodcast"]),
     load: function() {
       if (this.id) {
         const theId = this.id.split("-")[0];
-        this.loadPodcast(theId);        
+        this.loadPodcast(theId);
       }
     },
-    slugp:function(p){
-      return `${p.producerId}-${ this.$options.filters.slugify(p.producerName)}`;
-      }
+    slugp: function(p) {
+      return `${p.producerId}-${this.$options.filters.slugify(p.producerName)}`;
+    }
   },
   created: function() {
     this.load();

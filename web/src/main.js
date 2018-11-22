@@ -1,6 +1,5 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 import Vue from 'vue'
@@ -37,7 +36,6 @@ Vue.filter('slugify', function slugify(text) {
     .replace(/^-+/, '')             // Trim - from start of text
     .replace(/-+$/, '');            // Trim - from end of text
 });
-
 
 //axios global interceptor
 axios.interceptors.request.use(function (config) {

@@ -1,7 +1,5 @@
 <template>
 <div>
-
-
     <div class="container">
         <div id="flow">
             <span class="flow-1"></span>
@@ -28,28 +26,25 @@
                     </div>
                 </div>
             </div>
-        </div>
-        
-    </div>
-    
-    
-    
+        </div>     
+    </div>   
 </div>
- 
 </template>
 <script>
-import {mapActions} from 'vuex'
+import { mapActions } from "vuex";
 
 export default {
-  name:'login',
-  data:function(){return{username:'', password:''}},
-  methods:{
-      ...mapActions(['login']),
-      logMeIn: function(){        
-          this.login({username:this.username,password:this.password});
-          this.$router.push('/admin/producers');
-      }
+  name: "login",
+  data: function() {
+    return { username: "", password: "" };
+  },
+  methods: {
+    ...mapActions(["login"]),
+    logMeIn: function() {
+      this.login({ username: this.username, password: this.password });
+      this.$router.push("/admin/producers");
+    }
   }
-}
+};
 </script>
 

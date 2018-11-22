@@ -1,8 +1,5 @@
 <template>
-
-
-    <div>
-       
+    <div>      
         <div class="container">
         <div id="flow">
             <span class="flow-1"></span>
@@ -25,10 +22,8 @@
                 </div>
             </div>
             </form>
-            <!-- Developers -->
-
+  
             <div>
-
                 <div class="column " v-show="isLoading">
                     <div class=" card">
                         <div class="card-content">
@@ -58,7 +53,6 @@
 
                 <PodcastListItem v-show="!isLoading" v-for="p in podcasts" :key="p.id" :p="p" ></PodcastListItem>
 
-
                 <div class="column ">
                     <div class="card-content">
                         <div class="is-pulled-left">
@@ -75,25 +69,14 @@
 
                     </div>
                 </div>
-
-
-
-
             </div>
-            <!-- End Developers -->
-            <!-- End Staff -->
         </div>
     </div>
-
-
-    </div>
-    
-    
-    
+    </div>    
 </template>
 <script>
 import PodcastListItem from "@/components/PodcastListItem";
-import { mapGetters, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 
 export default {
@@ -101,7 +84,8 @@ export default {
   props: ["producer_id"],
   components: { PodcastListItem },
   computed: {
-     ...mapGetters(['podcasts','totalPages','first','last', 'isLoading']),
+//     ...mapGetters(['podcasts','totalPages','first','last', 'isLoading']),
+     ...mapState(['podcasts','totalPages','first','last', 'isLoading']),
     pid: function() {
       return (this.producer_id || "").split("-")[0];
     }

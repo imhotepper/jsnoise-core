@@ -5,13 +5,13 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        podcast: {},
+       // podcast: {},
         podcasts: [],
-        totalPages: null,
+        producers: [],
         first: true,
         last: true,
+        totalPages: null,
         q: '',
-        producers: [],
         isLoggedIn: !!localStorage.getItem("auth"),
         isLoading:false,        
         player : new Audio(),
@@ -20,13 +20,7 @@ export default new Vuex.Store({
         isMp3Loading:false
         
     },
-    getters: {
-        podcasts: (state) => state.podcasts,
-        first: (state) => state.first,
-        last: (state) => state.last,
-        totalPages: (state) => state.totalPages,
-        q: (state) => state.q,
-        podcast: (state) => state.podcast,
+    getters: {      
         producers:(state) => state.producers,
         isLoading:(state) => state.isLoading,
         isPlaying:(state) => state.isPlaying,
@@ -41,7 +35,7 @@ export default new Vuex.Store({
             state.last = details.last;
             state.totalPages = details.totalPages;
         },
-        setPodcast: (state, podcast) => state.podcast = podcast,
+       // setPodcast: (state, podcast) => state.podcast = podcast,
         setProducers: (state, producers) => state.producers = producers,
         isLoading:(state,isLoading) =>{ 
             state.isLoading = isLoading;
@@ -55,7 +49,7 @@ export default new Vuex.Store({
         setMp3:(state, mp3) => state.mp3 =  mp3
     },
     actions: {
-        play({commit, getters, state}, mp3){
+        play({commit, getters}, mp3){
            var player = getters.player;
             if (player.src == mp3) {
                 commit('isPlaying',false);
@@ -78,23 +72,22 @@ export default new Vuex.Store({
                 );
             }
         },
-        loadPodcast(context, id) {
-            context.commit('isLoading', true);
-            Vue.axios
-                .get(`/api/shows/${id}`)
-                .then(resp =>{
-                    context.commit('isLoading', false);
-                    context.commit('setPodcast', resp.data);})
-                .catch(err => {
-                    context.commit('isLoading', false);console.log(err);});
+        // loadPodcast(context, id) {
+        //     context.commit('isLoading', true);
+        //     Vue.axios
+        //         .get(`/api/shows/${id}`)
+        //         .then(resp =>{
+        //             context.commit('isLoading', false);
+        //             context.commit('setPodcast', resp.data);})
+        //         .catch(err => {
+        //             context.commit('isLoading', false);console.log(err);});
 
-        },
+        // },
         loadPodcasts(context, details) {
             var url = `/api/showslist?page=${details.page}`;
             if (details.pid) {
                 url = `/api/producers/${details.pid}/shows?page=${details.page}`;
             }
-
             if (details.q) url += "&q=" + details.q;
             context.commit('isLoading', true);
             Vue.axios
