@@ -5,12 +5,10 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-       // podcast: {},
         podcasts: [],
         producers: [],
         first: true,
         last: true,
-        totalPages: null,
         q: '',
         isLoggedIn: !!localStorage.getItem("auth"),
         isLoading:false,        
@@ -35,7 +33,6 @@ export default new Vuex.Store({
             state.last = details.last;
             state.totalPages = details.totalPages;
         },
-       // setPodcast: (state, podcast) => state.podcast = podcast,
         setProducers: (state, producers) => state.producers = producers,
         isLoading:(state,isLoading) =>{ 
             state.isLoading = isLoading;
@@ -72,17 +69,6 @@ export default new Vuex.Store({
                 );
             }
         },
-        // loadPodcast(context, id) {
-        //     context.commit('isLoading', true);
-        //     Vue.axios
-        //         .get(`/api/shows/${id}`)
-        //         .then(resp =>{
-        //             context.commit('isLoading', false);
-        //             context.commit('setPodcast', resp.data);})
-        //         .catch(err => {
-        //             context.commit('isLoading', false);console.log(err);});
-
-        // },
         loadPodcasts(context, details) {
             var url = `/api/showslist?page=${details.page}`;
             if (details.pid) {

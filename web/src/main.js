@@ -9,8 +9,6 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import * as uiv from 'uiv'
 
-import store from '@/store'
-
 Vue.use(VueAxios, axios);
 Vue.use(uiv);
 Vue.config.productionTip = false
@@ -63,6 +61,10 @@ axios.interceptors.response.use(function (response) {
     return Promise.reject(error);
   }
 });
+
+
+import store from '@/store'
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

@@ -3,5 +3,7 @@
 .DS_Store
 api/bin
 api/obj
+Worker/bin
+Worker/obj
 web/node_modules
 .idea.vscode

@@ -42,17 +42,15 @@ namespace CoreJsNoise.Controllers
 
         [HttpGet] 
         [Route("/api/producers/{id}/shows")]
-        public async Task<ActionResult<ShowsResponse>> GetAll(int id, string q, int? page = 1)
-        {
-            return await _mediator.Send(new ProducerGetAllRequest {ProducerId = id, Query = q, Page = page});
-        }
+        public async Task<ActionResult<ShowsResponse>> GetAll(int id, string q, int? page = 1) =>
+        await _mediator.Send(new ProducerGetAllRequest {ProducerId = id, Query = q, Page = page});
+        
 
         [HttpGet]
         [Route("/api/admin/producers")]
         [Authorize]
-        public async Task<ActionResult<List<ProducerAggregateDto>>> GetProducers()
-        {
-            return await _mediator.Send(new ProducersForAdminRequest());
-        }
+        public async Task<ActionResult<List<ProducerAggregateDto>>> GetProducers() =>
+             await _mediator.Send(new ProducersForAdminRequest());
+        
     }
 }

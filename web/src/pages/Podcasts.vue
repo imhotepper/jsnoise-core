@@ -76,7 +76,7 @@
 </template>
 <script>
 import PodcastListItem from "@/components/PodcastListItem";
-import { mapState, mapGetters, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex';
 
 
 export default {
@@ -84,8 +84,7 @@ export default {
   props: ["producer_id"],
   components: { PodcastListItem },
   computed: {
-//     ...mapGetters(['podcasts','totalPages','first','last', 'isLoading']),
-     ...mapState(['podcasts','totalPages','first','last', 'isLoading']),
+     ...mapState(['podcasts','first','last', 'isLoading']),
     pid: function() {
       return (this.producer_id || "").split("-")[0];
     }
@@ -93,9 +92,7 @@ export default {
   data: function() {
     return {
       currentPage: 1,
-      search: "", 
-      player: null,
-        isPaying: false
+      search: ""
     };
   },
 
@@ -132,18 +129,7 @@ export default {
     },
     load: function() {
       this.loadPodcasts({page:this.currentPage,q:this.search});
-    }, 
-     play(mp3){
-        if (this.isPlaying){ 
-            player.pause();
-            this.isPlaying = false;
-        }
-        else {
-            player.src = mp3;
-            player.play();
-            this.isPlaying= true;
-        }
-      }
+    }
   },
   
   beforeRouteUpdate: function(to, from, next) {
@@ -156,12 +142,8 @@ export default {
     this.search = this.$route.query.q || "";
     this.currentPage = this.$route.query.p || 1;
     this.load();
-    this.player = new Audio();
   }
 };
 </script>
-
 <style>
-  
-   
 </style>

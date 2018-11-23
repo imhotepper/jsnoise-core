@@ -64,9 +64,9 @@ export default {
     getEmptyPriducer: function() {
       return { name: "", url: "", feedUrl: "" };
     },
-    saveProducers: function() {
-      localStorage.setItem("producers", JSON.stringify(this.producers));
-    },
+    // saveProducers: function() {
+    //   localStorage.setItem("producers", JSON.stringify(this.producers));
+    // },
     load: function() {
       this.loadProducers();
     },

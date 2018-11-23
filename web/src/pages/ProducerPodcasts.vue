@@ -79,7 +79,6 @@ export default {
   props: ["producer_id"],
   components: { PodcastListItem },
   computed: {
-    // ...mapGetters(['podcasts','totalPages','first','last', 'isLoading']),
      ...mapState(['podcasts','totalPages','first','last', 'isLoading']),
     pid: function() {
       return (this.producer_id || "").split("-")[0];
