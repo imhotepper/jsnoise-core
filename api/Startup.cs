@@ -132,12 +132,12 @@ namespace CoreJsNoise
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
-            app.UseMvc();
-
             app.UseCors(cfg => 
-                cfg.WithOrigins("https://jsnoise.netlify.com","http://localhost:8080")
+                            cfg
+                            //.WithOrigins("https://jsnoise.netlify.com","http://localhost:8080")            
+                            .AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+                        app.UseMvc();
 
-                .AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 if (serviceScope.ServiceProvider.GetService<PodcastsCtx>() != null)
